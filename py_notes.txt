@@ -1,0 +1,244 @@
+array = []
+tuple = () // like const
+set = {}, empty set = Set()
+my_set.remove(2)     # Removes 2 (error if not present)
+my_set.discard(2)    # Safe remove (no error)
+
+# Convert dictionary to JSON string
+person_dict = {"name": "Alice", "age": 30}
+person_json = json.dumps(person_dict)// json.stringify
+print(person_json)  # Output: {"name": "Alice", "age": 30}
+
+person_parsed = json.loads(person_dict) // back to dist
+
+# Parse JSON string to dictionary
+parsed_dict = json.loads(person_json)//JSON.parse
+print(parsed_dict)  # Output: {'name': 'Alice', 'age': 30}
+
+define function - def 
+def greet(name):
+    return f"Hello, {name}!"
+print(greet("Alice"))  # Output: Hello, Alice!
+
+enumerate - when you need key value from the string
+
+sliceing
+s[:5]     # first 5 characters
+s[5:]     # from index 5 to end
+s[:-1]    # remove last character
+s[::2]    # every second character
+
+- to get() is a dictionary method. if exists return value if not return default value (0) - freq.get(word, 0)
+
+Python’s LEGB Rule:
+Python uses the LEGB rule to determine variable scope:
+
+Local: Variables defined inside a function.
+Enclosing: Variables in the nearest enclosing scope (for example, nested functions).
+Global: Variables defined at the top level of the module.
+Built-in: Predefined names in Python (for example, len, print).
+
+
+lambda is used to create small anonymous functions
+square = lambda x: x ** 2
+print(square(5))  # Output: 25
+
+numbers = [1, 2, 3, 4]
+squared = map(lambda x: x ** 2, numbers)// map() returns a map object, so we convert it to list
+print(list(squared))  # Output: [1, 4, 9, 16]
+
+
+def greet(name="World", *args, **kwargs):
+    print(f"Hello, {name}!")
+    print("Arguments:", args)
+    print("Keyword Arguments:", kwargs)
+
+greet("Alice", 1, 2, color="blue", age=30)
+# Output:
+# Hello, Alice!
+# Arguments: (1, 2)
+# Keyword Arguments: {'color': 'blue', 'age': 30}
+
+Object-Oriented Programming (OOP)
+Class Definition
+1) Inheritance
+Python Constructor and self:
+
+Python uses __init__ as a special method to initialize an object. It explicitly requires self as the first parameter in all instance methods to refer to the object itself.
+
+class Animal:
+    def __init__(self, name):
+        self.name = name
+
+    def speak(self):
+        return f"{self.name} makes a sound."
+
+class Dog(Animal):
+    def speak(self):
+        return f"{self.name} barks."
+
+# Using the classes
+generic_animal = Animal("Generic Animal")
+dog = Dog("Buddy")
+
+print(generic_animal.speak())  # Output: Generic Animal makes a sound.
+print(dog.speak())             # Output: Buddy barks.
+
+2) Polymorphism 
+Same action → different results based on the object. eg: TV Remote work with different TV.
+class Bird:
+    def fly(self):
+        return "Birds can fly."
+
+class Penguin(Bird):
+    def fly(self):
+        return "Penguins cannot fly."
+
+def get_flight_ability(bird):
+    print(bird.fly())
+
+get_flight_ability(Bird())  # Output: Birds can fly.
+get_flight_ability(Penguin())  # Output: Penguins cannot fly.
+
+3) async and awiat concept in phthon
+Unlike JavaScript, Python does not have a built-in event loop – it relies on asyncio to create and manage one.
+import asyncio
+import aiohttp
+
+async def fetch_data():
+    async with aiohttp.ClientSession() as session:
+        async with session.get('https://api.example.com/data') as response:
+            data = await response.json()
+            print(data)
+
+asyncio.run(fetch_data())
+
+try - except - finally
+try:
+    result = 10 / 0
+except ZeroDivisionError as e:
+    print(f"Error: {e}")
+else:
+    print("No errors occurred!")
+finally:
+    print("Execution complete.")
+# Output:
+# Error: division by zero
+# Execution complete.
+
+message = "I love phython"
+print("phython" in message) true
+print(message.startwith("I")) true
+print(message.endwith("phython")) true
+print(message.find("phython")) 7
+print(message.count("phython")) 1
+
+
+print(message.replace('phython', 'JS'))
+
+
+
+
+list comprehension:
+[new_item for item in iterable if condition]
+
+------------- math ------------------
+
+Math rule - pemdas
+import numpy as np
+
+1) Vector Magnitude (Length) - Distance calculation, Similarity between data points
+Magnitude is used to remove size
+User = [age, location, time_spent, clicks, purchases]
+
+∣∣v∣∣= x2+y2
+used in ​- Personalization
+
+2) dot product -(Measure similarity) Dot product tells how similar two vectors are.
+a = np.array([1, 2])
+b = np.array([3, 4])
+// formula - a1b1 + a2b2
+dot = np.dot(a, b)
+print(dot)
+used in - comparing like movie recomadation
+
+3) Cosine Similarity
+from numpy.linalg import norm
+
+def cosine_similarity(a, b):
+    return np.dot(a, b) / (norm(a) * norm(b))
+
+# Example: similarity between User 1 and User 2
+sim = cosine_similarity(ratings[0], ratings[1])
+print(f"Similarity User1-User2: {sim:.2f}")
+used in - Chatbots
+4) matrix = collection of vectors (rows & columns)
+
+
+5) Similarity Matrix (All Comparisons)
+similarity(i,j)=∥vi​∥×∥vj​∥vi​⋅vj​​
+
+6) Feature weighting - I care more about rating, less about duration. So you change importance manually.
+	[rating*2, votes*0.3, revenue*0.5, duration*0.1]
+
+
+------------------ Text summarization -------------------------
+3 method for text summarization
+"stuff"
+"map_reduce"
+"refine" (another advanced method)
+
+When to Use Which?
+if your useing very short document like one or two paragraph use stuff
+
+1) stuff chain
+Takes the entire document
+Puts (“stuffs”) everything into one prompt
+Sends it to the LLM once
+Gets one summary
+
+2) map_reduce => 
+it will check into smaller document and get summary of every chunk and pass only the summary to llm instread of whole content
+
+3) refine => read first chunk create summary and then read second chunk and update old summary it will conitinues
+map_reduce will work as 
+
+
+steps to follow RAG application
+User Query
+    ↓
+Search Summary Embeddings
+    ↓
+Find Relevant Documents
+    ↓
+Retrieve Original Chunks
+    ↓
+Send to LLM
+
+----------- Embedding -------------
+
+An embedding vector is a numerical representation of text.
+EXAMPLE
+[0.12, -0.45, 0.91, 0.33, ...]
+
+
+-------------------Metadata ---------------
+Metadata helps:
+
+filtering,
+organization,
+fast retrieval,
+access control,
+ranking.
+
+Example 
+{
+  "id": "chunk_101",
+  "text": "AI improves healthcare diagnosis",
+  "embedding": [0.12, -0.45, 0.91],
+  "metadata": {
+    "source": "healthcare.pdf",
+    "page": 5,
+    "topic": "AI"
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(ls \"c:/Users/mohammedjav-67239/mdj/python/ML/supervisedLearning/regression\\(continous\\)/linearRegression/task/\")"
+    ]
+  }
+}

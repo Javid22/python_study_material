@@ -1,0 +1,92 @@
+1) Series
+A Pandas Series is like a column in a table.
+It is a one-dimensional array holding data of any type.
+Eg: 
+	import pandas as pd
+	a = [1, 7, 2]
+	myvar = pd.Series(a, index = ["x", "y", "z"])
+	print(myvar)# x= 1, y=7, z=2
+	print(myvar[y]) #7
+
+2) DataFrames
+Data sets in Pandas are usually multi-dimensional tables, called DataFrames.
+Series is like a column, a DataFrame is the whole table.
+EG:
+import pandas as pd
+data = {
+  "calories": [420, 380, 390],
+  "duration": [50, 40, 45]
+}
+myvar = pd.DataFrame(data)
+
+print(myvar) 
+     calories  duration
+0       420        50
+1       380        40
+2       390        45
+
+
+3) head - The head() method returns the headers and a specified number of rows, starting from the top.
+	 if the number of rows is not specified, the head() method will return the top 5 rows.
+
+4) tail - There is also a tail() method for viewing the last rows of the DataFrame.
+
+5) The info() method also tells us how many Non-Null values there are present in each column, and in our data set it seems like there are 164 of 169 Non-Null values in the "Calories" column.
+
+Which means that there are 5 rows with no value at all, in the "Calories" column, for whatever reason.
+
+Empty values, or Null values, can be bad when analyzing data, and you should consider removing rows with empty values. This is a step towards what is called cleaning data, and you will learn more about that in the next chapters.
+
+6) replace empty cell
+method 1) the dropna() method returns a new DataFrame, and will not change the original.
+dropna(inplace = True) will NOT return a new DataFrame, but it will remove all rows containing NULL values from the original DataFrame.
+df.dropna(inplace = True)
+
+ fillna() method allows us to replace empty cells with a value:
+df.fillna(130, inplace = True)
+df.fillna({"Calories": 130}, inplace=True)
+
+method 2) replace empty cells, is to calculate the mean, median or mode value of the column
+
+Calculate the MEAN, and replace any empty values with it:
+1) Mean = the average value (the sum of all values divided by number of values).
+
+import pandas as pd
+df = pd.read_csv('data.csv')
+x = df["Calories"].mean()
+df.fillna({"Calories": x}, inplace=True)
+
+2) Median = the value in the middle, after you have sorted all values ascending
+
+Calculate the MEDIAN, and replace any empty values with it:
+import pandas as pd
+df = pd.read_csv('data.csv')
+x = df["Calories"].median()
+df.fillna({"Calories": x}, inplace=True)
+
+3) Mode = the value that appears most frequently.
+
+Calculate the MODE, and replace any empty values with it:
+import pandas as pd
+df = pd.read_csv('data.csv')
+x = df["Calories"].mode()[0]
+df.fillna({"Calories": x}, inplace=True)
+
+4) Convert to date:
+import pandas as pd
+df = pd.read_csv('data.csv')
+df['Date'] = pd.to_datetime(df['Date'], format='mixed')
+print(df.to_string())
+// remove empty row
+df.dropna(subset=['Date'], inplace = True)
+
+
+7) to_dist() - convert DataFrames or Series into Python dictionaries.
+df.to_dict(orient='dict')
+orient determines the structure. Common options:
+
+'dict' → {column -> {index -> value}} (default)
+'list' → {column -> [values]}
+'records' → [ {col: value}, ... ] → list of dictionaries (perfect for JSON)
+'series' → {column -> Series}
+'index' → {index -> {column -> value}}

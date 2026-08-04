@@ -1,0 +1,40 @@
+Implementation Plan - Mailbox Integration Tests
+The goal is to implement integration tests for the 
+mailbox
+ application using a real database (MySQL) instead of mocking responses.
+
+User Review Required
+IMPORTANT
+
+Database Requirement: This plan assumes you have a MySQL database available for testing (e.g., mailbox_test). The tests will need a connection string provided via COMM_DB_READ environment variable. The tests will perform destructive actions (schema push/cleanup) on this database, so DO NOT use a production or shared development database.
+
+Proposed Changes
+Configuration & Dependencies
+Install Dependencies: jest, ts-jest, @types/jest, dotenv.
+Configure Jest: Create jest.config.js to handle TypeScript paths and setup files.
+Test Infrastructure
+Test Database Setup:
+Create a helper to push the Prisma schema to the test database before tests run.
+Usage of prisma db push or raw SQL to ensure schema existence.
+Seeder Utility:
+Create tests/utils/seeder.ts to helper insert profile_pairs, com_events data using the Prisma client.
+Create tests/utils/cleaner.ts to truncate tables after tests.
+Test Implementation
+Chat Integration Test:
+Create tests/integration/chatController.test.ts.
+Scenario: Validate 
+getChatList
+ (or similar controller method).
+Steps:
+Clean DB.
+Seed test data (sender, receiver, messages).
+Call the controller function.
+Assert that the returned data matches the seeded data.
+Verification Plan
+Automated Tests
+Run npm test inside 
+applications/mailbox
+.
+Ensure the test connects to the local test database (configured via .env.test or environment variables), seeds data, and passes.
+Manual Verification
+Inspect the test database during execution (if paused) to verify data insertion.
